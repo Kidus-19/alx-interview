@@ -2,7 +2,7 @@
 
 const request = require('request');
 
-// Validate input arguments
+// Get the Movie ID from the command line arguments
 const movieId = process.argv[2];
 
 if (!movieId) {
@@ -10,23 +10,28 @@ if (!movieId) {
   process.exit(1);
 }
 
-// API URL for the specific movie (no static data)
+// Construct the API URL for the specific movie
 const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
 
-request(url, (error, response, body) => {
+request(url, function (error, response, body) {
   if (error) {
-    console.error(error);
+    console.error('Error:', error);
     return;
   }
 
-  // Validate response status
   if (response.statusCode === 200) {
     const film = JSON.parse(body);
     const characters = film.characters;
 
-    characters.forEach((characterUrl) => {
-      request(characterUrl, (error, response, body) => {
-        if (!error && response.statusCode === 200) {
+    // Fetch and print each character's name
+    characters.forEach(function (characterUrl) {
+      request(characterUrl, function (error, response, body) {
+        if (error) {
+          console.error('Error:', error);
+          return;
+        }
+
+        if (response.statusCode === 200) {
           const character = JSON.parse(body);
           console.log(character.name);
         }
