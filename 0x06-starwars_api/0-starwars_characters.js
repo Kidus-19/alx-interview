@@ -2,7 +2,7 @@
 
 const request = require('request');
 
-// Get the Movie ID from the command line arguments
+// Validate input arguments
 const movieId = process.argv[2];
 
 if (!movieId) {
@@ -10,8 +10,8 @@ if (!movieId) {
   process.exit(1);
 }
 
-// API URL for the specific movie
-const url = `https://swapi-api.hbtn.io/api/films/${movieId}/`;
+// API URL for the specific movie (no static data)
+const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
 
 request(url, (error, response, body) => {
   if (error) {
@@ -19,6 +19,7 @@ request(url, (error, response, body) => {
     return;
   }
 
+  // Validate response status
   if (response.statusCode === 200) {
     const film = JSON.parse(body);
     const characters = film.characters;
@@ -35,4 +36,3 @@ request(url, (error, response, body) => {
     console.log('Movie not found');
   }
 });
-
