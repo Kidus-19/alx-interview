@@ -10,7 +10,7 @@ if (!movieId) {
   process.exit(1);
 }
 
-// Construct the API URL for the specific movie
+// API URL for the specific movie (ensure correct URL format for your project)
 const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
 
 request(url, function (error, response, body) {
@@ -23,7 +23,7 @@ request(url, function (error, response, body) {
     const film = JSON.parse(body);
     const characters = film.characters;
 
-    // Fetch and print each character's name
+    // Fetch and print each character's name in order
     characters.forEach(function (characterUrl) {
       request(characterUrl, function (error, response, body) {
         if (error) {
